@@ -8,7 +8,7 @@ namespace SQLConnect
 {
     class Equipment
     {
-        private MySQLDatabase MySQL = new MySQLDatabase("root", "M3312140m", "travel2");  
+        private MySQLDatabase MySQL = new MySQLDatabase("root", "student", "travel2");  
         public int EquipID { get;set; }
         public string EquipmentName { get; set; }
         public string EquipmentDescription { get; set; }
@@ -72,7 +72,8 @@ namespace SQLConnect
                 MySQL.SetData("delete from Equipment where EquipId = " + EquipID);
                 MySQL.Close();
             }
-
         }
+
+        
     }
 }

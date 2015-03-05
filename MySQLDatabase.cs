@@ -94,5 +94,53 @@ namespace SQLConnect
                 return false;
             }
         }
+
+        public void PrintMetadata(string SQLStr)
+        {
+            try
+            {
+                MySqlDataReader reader;
+                MySqlCommand cmd = new MySqlCommand(SQLStr, conn);
+                reader = cmd.ExecuteReader();
+                Console.WriteLine("Field Count: " + reader.FieldCount+"\n");
+                Console.WriteLine("{0,-20}  {1,-10}\n", "Field Name","Field Type");
+                for (int i = 0; i < reader.FieldCount; i++)
+                {
+                    Console.WriteLine("{0,-20}  {1,-10}", reader.GetName(i), reader.GetFieldType(i).ToString().Substring(reader.GetFieldType(i).ToString().IndexOf('.')+1).ToUpper());
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        public void PrintFormat(string SQLStr)
+        {
+            try
+            {
+                MySqlDataReader reader;
+                MySqlCommand cmd = new MySqlCommand(SQLStr, conn);
+                reader = cmd.ExecuteReader();
+                int formatCount = -5 * reader.FieldCount;
+                string formatString = "";
+                List<string>fieldNames = new List<string>();
+                for (int i = 0; i < reader.FieldCount; i++)
+                {
+                    //formatString += "{0," + formatCount+"} ";
+                    Console.Write("{0,"+formatCount+"} ", reader.GetName(i));
+                    formatCount += 5;
+                    //fieldNames.Add(reader.GetName(i));
+                    //Console.Write(reader.GetName(i) + "   ");
+                }
+                
+              
+            }
+            catch(Exception e)
+            {
+
+            }
+        }
     }
 }

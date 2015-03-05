@@ -6,3 +6,6 @@ C:\Users\wmswe_000\Desktop\rit\3rd year\database access.connect\SQLConnect\obj\D
 C:\Users\Student\Desktop\SQLConnect\bin\Debug\SQLConnect.exe.config
 C:\Users\Student\Desktop\SQLConnect\obj\Debug\SQLConnect.exe
 C:\Users\Student\Desktop\SQLConnect\obj\Debug\SQLConnect.pdb
+C:\Users\Student\Desktop\SQLConnect\obj\Debug\SQLConnect.csprojResolveAssemblyReference.cache
+C:\Users\Student\Desktop\SQLConnect\bin\Debug\SQLConnect.exe
+C:\Users\Student\Desktop\SQLConnect\bin\Debug\SQLConnect.pdb
