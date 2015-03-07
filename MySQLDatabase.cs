@@ -61,6 +61,7 @@ namespace SQLConnect
                 Console.WriteLine(e.Message);
                 return null;
             }
+            reader.Close();
 
 
         }
@@ -108,6 +109,7 @@ namespace SQLConnect
                 {
                     Console.WriteLine("{0,-20}  {1,-10}", reader.GetName(i), reader.GetFieldType(i).ToString().Substring(reader.GetFieldType(i).ToString().IndexOf('.')+1).ToUpper());
                 }
+                reader.Close();
 
             }
             catch (Exception e)
@@ -120,26 +122,37 @@ namespace SQLConnect
         {
             try
             {
+                StringBuilder sb =  new StringBuilder();
                 MySqlDataReader reader;
                 MySqlCommand cmd = new MySqlCommand(SQLStr, conn);
                 reader = cmd.ExecuteReader();
-                int formatCount = -5 * reader.FieldCount;
-                string formatString = "";
+                string fieldName;
                 List<string>fieldNames = new List<string>();
                 for (int i = 0; i < reader.FieldCount; i++)
                 {
-                    //formatString += "{0," + formatCount+"} ";
-                    Console.Write("{0,"+formatCount+"} ", reader.GetName(i));
-                    formatCount += 5;
-                    //fieldNames.Add(reader.GetName(i));
-                    //Console.Write(reader.GetName(i) + "   ");
+                   fieldName = reader .GetName(i);
+                   sb.AppendFormat("{0," + -28 + "}", fieldName);
                 }
+                Console.WriteLine(sb.ToString());
+          
+                Console.WriteLine();
+                while (reader.Read())
+                {
+                    sb = new StringBuilder();
+
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        sb.AppendFormat("{0,"+-28+"}",reader.GetValue(i));
+                    }
+                    Console.WriteLine(sb.ToString());
+                }
+                reader.Close();
                 
               
             }
             catch(Exception e)
             {
-
+                Console.WriteLine(e.Message);
             }
         }
     }
