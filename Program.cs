@@ -13,11 +13,18 @@ namespace SQLConnect
             Console.BufferWidth = 1000;
            
             //Equipment test = new Equipment();
-            MySQLDatabase test = new MySQLDatabase("root", "M3312140m", "travel2");
-            test.Connect();
-            test.PrintMetadata("select * from trip");
-            Console.WriteLine();
-            test.PrintFormat("select * from trip");
+            try
+            {
+                MySQLDatabase test = new MySQLDatabase("root", "M3312140m", "travel2");
+                test.Connect();
+                test.PrintMetadata("select * from trips");
+                Console.WriteLine();
+                test.PrintFormat("select * from trips");
+            }
+            catch (DLException e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
             //test.EquipID = 568;
           //  test.fetch();

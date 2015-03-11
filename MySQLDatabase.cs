@@ -31,6 +31,7 @@ namespace SQLConnect
             catch (Exception e)
             {
                 Connected = false;
+                throw new DLException(e);
             }
             return Connected;
         }
@@ -53,15 +54,15 @@ namespace SQLConnect
                     }
                     toReturn.Add(temp);
                     temp = null;
+                    reader.Close();
                 }
                 return toReturn;
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
-                return null;
+                throw new DLException(e);
             }
-            reader.Close();
+         
 
 
         }
@@ -76,9 +77,9 @@ namespace SQLConnect
             }
             catch(Exception e)
             {
-                Console.WriteLine(e.Message);
-                return false;
+                throw new DLException(e);
             }
+
 
             
         }
@@ -92,7 +93,7 @@ namespace SQLConnect
             }
             catch (Exception e)
             {
-                return false;
+                throw new DLException(e);
             }
         }
 
@@ -114,7 +115,10 @@ namespace SQLConnect
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+
+                throw new DLException(e);
+          
+            
             }
         }
 
@@ -152,7 +156,7 @@ namespace SQLConnect
             }
             catch(Exception e)
             {
-                Console.WriteLine(e.Message);
+                throw new DLException(e);
             }
         }
     }
