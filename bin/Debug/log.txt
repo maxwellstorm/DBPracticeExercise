@@ -28,3 +28,8 @@
 3/10/2015 8:30:10 PM Table 'travel2.trips' doesn't exist               
 3/10/2015 8:31:41 PM Table 'travel2.trips' doesn't exist               
 3/10/2015 8:32:03 PM Table 'travel2.trips' doesn't exist               
+3/12/2015 2:40:37 PM Table 'travel2.trips' doesn't exist               
+3/12/2015 2:41:02 PM Table 'travel2.trips' doesn't exist               
+3/12/2015 2:41:36 PM Table 'travel2.trips' doesn't exist               
+3/12/2015 2:48:24 PM Table 'travel2.trips' doesn't exist               
+3/12/2015 2:50:14 PM Table 'travel2.trips' doesn't exist               

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace SQLConnect
 {
@@ -104,6 +105,9 @@ namespace SQLConnect
                 MySqlDataReader reader;
                 MySqlCommand cmd = new MySqlCommand(SQLStr, conn);
                 reader = cmd.ExecuteReader();
+                foreach(DataColumn  d in reader.GetSchemaTable().Columns){
+                    Console.WriteLine(d.ToString());
+                }
                 Console.WriteLine("Field Count: " + reader.FieldCount+"\n");
                 Console.WriteLine("{0,-20}  {1,-10}\n", "Field Name","Field Type");
                 for (int i = 0; i < reader.FieldCount; i++)

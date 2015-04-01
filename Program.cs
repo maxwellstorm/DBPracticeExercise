@@ -17,7 +17,7 @@ namespace SQLConnect
             {
                 MySQLDatabase test = new MySQLDatabase("root", "M3312140m", "travel2");
                 test.Connect();
-                test.PrintMetadata("select * from trips");
+                test.PrintMetadata("select * from trip");
                 Console.WriteLine();
                 test.PrintFormat("select * from trips");
             }
