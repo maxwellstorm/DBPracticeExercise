@@ -17,21 +17,13 @@ namespace SQLConnect
             {
                 MySQLDatabase test = new MySQLDatabase("root", "M3312140m", "travel2");
                 test.Connect();
-                test.PrintMetadata("select * from trip");
-                Console.WriteLine();
-                test.PrintFormat("select * from trips");
+                test.GetData("Select * from equipment",true);
+                test.Close();
             }
             catch (DLException e)
             {
                 Console.WriteLine(e.Message);
             }
-
-            //test.EquipID = 568;
-          //  test.fetch();
-          //  Console.WriteLine("Equipment ID: " + test.EquipID);
-          //  Console.WriteLine("Equipment Desciption: " + test.EquipmentDescription);
-          //  Console.WriteLine("Equipment Name: " + test.EquipmentName);
-          //  Console.WriteLine("Equipment capacity: " + test.EquipmentCapacity);
             Console.ReadKey();
         }
     }

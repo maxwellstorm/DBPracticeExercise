@@ -33,3 +33,5 @@
 3/12/2015 2:41:36 PM Table 'travel2.trips' doesn't exist               
 3/12/2015 2:48:24 PM Table 'travel2.trips' doesn't exist               
 3/12/2015 2:50:14 PM Table 'travel2.trips' doesn't exist               
+4/1/2015 5:22:07 PM  Invalid attempt to Read when reader is closed.    
+4/1/2015 5:45:52 PM  There is already an open DataReader associated with this Connection which must be closed first.

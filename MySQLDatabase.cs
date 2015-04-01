@@ -37,10 +37,9 @@ namespace SQLConnect
             return Connected;
         }
 
-        public List<List<object>> GetData(string SQLStr)
+
+        private void addSQLData(MySqlCommand cmd, List<List<object>> toAdd)
         {
-            List<List<object>> toReturn = new List<List<object>>();
-            MySqlCommand cmd = new MySqlCommand(SQLStr, conn);
             MySqlDataReader reader;
             try
             {
@@ -53,18 +52,45 @@ namespace SQLConnect
                     {
                         temp.Add(reader.GetValue(i));
                     }
-                    toReturn.Add(temp);
+                    toAdd.Add(temp);
                     temp = null;
-                    reader.Close();
                 }
-                return toReturn;
+                reader.Close();
             }
             catch (Exception e)
             {
                 throw new DLException(e);
             }
-         
+        }
 
+
+        public List<List<object>> GetData(string SQLStr)
+        {
+            List<List<object>> toReturn = new List<List<object>>();
+            MySqlCommand cmd = new MySqlCommand(SQLStr, conn);
+            addSQLData(cmd, toReturn);
+            return toReturn;
+        }
+
+      
+
+        public  List<List<object>> GetData(string SQLStr,Boolean ShowColNames)
+        {
+            List<List<object>> toReturn = new List<List<object>>();
+            MySqlCommand cmd = new MySqlCommand(SQLStr, conn);
+            MySqlDataReader reader = cmd.ExecuteReader();
+            if (ShowColNames)
+            {
+                List<object> temp = new List<object>();
+                for (int i = 0; i < reader.FieldCount; i++)
+                {
+                    temp.Add(reader.GetName(i));
+                }
+                toReturn.Add(temp);
+                reader.Close();
+            }
+            addSQLData(cmd, toReturn);
+            return toReturn;
 
         }
 
