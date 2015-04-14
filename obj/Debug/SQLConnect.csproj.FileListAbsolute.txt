@@ -18,3 +18,6 @@ C:\Users\wmswe_000\Desktop\rit\3rd year\database access.connect\DBPracticeExerci
 C:\Users\Student\Desktop\DBPracticeExercise\bin\Debug\SQLConnect.exe.config
 C:\Users\Student\Desktop\DBPracticeExercise\obj\Debug\SQLConnect.exe
 C:\Users\Student\Desktop\DBPracticeExercise\obj\Debug\SQLConnect.pdb
+C:\Users\Student\Desktop\DBPracticeExercise\bin\Debug\SQLConnect.exe
+C:\Users\Student\Desktop\DBPracticeExercise\bin\Debug\SQLConnect.pdb
+C:\Users\Student\Desktop\DBPracticeExercise\obj\Debug\SQLConnect.csprojResolveAssemblyReference.cache

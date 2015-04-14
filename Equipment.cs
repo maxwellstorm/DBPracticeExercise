@@ -34,7 +34,10 @@ namespace SQLConnect
             try
             {
                 MySQL.Connect();
-                List<Object> row = MySQL.GetData("SELECT EquipmentName,EquipmentDescription,EquipmentCapacity from Equipment where EquipID = " + EquipID)[0];
+                //List<Object> row = MySQL.GetData("SELECT EquipmentName,EquipmentDescription,EquipmentCapacity from Equipment where EquipID = " + EquipID)[0];
+                Dictionary<string,object> vals = new Dictionary<string,object>();
+                vals.Add("@equipID",this.EquipID);
+                List<object> row = MySQL.GetData("SELECT EquipmentName,EquipmentDescription,EquipmentCapacity from Equipment where EquipID = @equipID", vals)[0];
                 EquipmentName = (string)row[0];
                 EquipmentDescription = (string)row[1];
                 EquipmentCapacity = (int)row[2];

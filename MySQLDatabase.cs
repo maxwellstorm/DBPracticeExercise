@@ -13,12 +13,14 @@ namespace SQLConnect
         public string Username, Password, DatabaseName;
         public Boolean Connected;
         private MySqlConnection conn;
+        private Dictionary<string,MySqlCommand> prepStatements;
 
         public MySQLDatabase(string Username, string Password, string DatabaseName)
         {
             this.Username = Username;
             this.Password = Password;
             this.DatabaseName = DatabaseName;
+            prepStatements = new Dictionary<string, MySqlCommand>();
             conn = new MySqlConnection("Data Source=localhost;" + "User ID=" + Username + ";Password=" + Password+";database="+DatabaseName);
         }
 
@@ -92,6 +94,21 @@ namespace SQLConnect
             addSQLData(cmd, toReturn);
             return toReturn;
 
+        }
+
+        public List<List<object>> GetData(string sqlStr,Dictionary<string,object> vals)
+        {
+            try
+            {
+                List<List<object>> toReturn = new List<List<object>>();
+                MySqlCommand cmd = this.prepare(sqlStr, vals);
+                addSQLData(cmd, toReturn);
+                return toReturn;
+            }
+            catch (Exception e)
+            {
+                throw new DLException(e);
+            }
         }
 
         public bool SetData(string SQLStr)
@@ -190,16 +207,38 @@ namespace SQLConnect
             }
         }
 
-        public void prepare(string sqlStr,List<string> vals)
+        private MySqlCommand prepare(string sqlStr, Dictionary<string, object> vals)
         {
-            MySqlParameter param;
-            MySqlCommand cmd = new MySqlCommand(null, conn);
-
-            foreach(string val in vals)
+            MySqlCommand cmd = new MySqlCommand(sqlStr, conn);
+            try
             {
-                param = new MySqlParameter();
-
+                MySqlParameter param;
+               
+                bool duplicateSQlStr = prepStatements.ContainsKey(sqlStr);
+                if (duplicateSQlStr)
+                    cmd = prepStatements[sqlStr];
+                foreach (KeyValuePair<string, object> val in vals)
+                {
+                    if (!duplicateSQlStr)
+                    {
+                        param = new MySqlParameter(val.Key, val.Value);
+                        cmd.Parameters.Add(param);
+                    }
+                    else
+                    {
+                        cmd.Parameters[val.Key].Value = val.Value;
+                    }
+                }
+                if (!duplicateSQlStr)
+                    prepStatements.Add(sqlStr, cmd);
+                cmd.Prepare();
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return cmd;
+            
         }
 
 

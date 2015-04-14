@@ -35,3 +35,5 @@
 3/12/2015 2:50:14 PM Table 'travel2.trips' doesn't exist               
 4/1/2015 5:22:07 PM  Invalid attempt to Read when reader is closed.    
 4/1/2015 5:45:52 PM  There is already an open DataReader associated with this Connection which must be closed first.
+4/14/2015 5:55:32 PM Authentication to host 'localhost' for user 'root' using method 'mysql_native_password' failed with message: Access denied for user 'root'@'localhost' (using password: YES)
+4/14/2015 6:06:50 PM There is already an open DataReader associated with this Connection which must be closed first.

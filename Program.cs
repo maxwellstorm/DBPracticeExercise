@@ -15,10 +15,14 @@ namespace SQLConnect
             //Equipment test = new Equipment();
             try
             {
-                MySQLDatabase test = new MySQLDatabase("root", "M3312140m", "travel2");
-                test.Connect();
-                test.GetData("Select * from equipment",true);
-                test.Close();
+                //MySQLDatabase test = new MySQLDatabase("root", "student", "travel2");
+               // test.Connect();
+               // test.GetData("Select * from equipment",true);
+              //  test.Close();]
+                Equipment test = new Equipment();
+                test.EquipID = 568;
+                test.fetch();
+
             }
             catch (DLException e)
             {
