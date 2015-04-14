@@ -189,5 +189,19 @@ namespace SQLConnect
                 throw new DLException(e);
             }
         }
+
+        public void prepare(string sqlStr,List<string> vals)
+        {
+            MySqlParameter param;
+            MySqlCommand cmd = new MySqlCommand(null, conn);
+
+            foreach(string val in vals)
+            {
+                param = new MySqlParameter();
+
+            }
+        }
+
+
     }
 }
