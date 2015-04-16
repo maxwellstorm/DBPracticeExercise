@@ -8,7 +8,7 @@ namespace SQLConnect
 {
     class Equipment
     {
-        private MySQLDatabase MySQL = new MySQLDatabase("root", "student", "travel2");  
+        private MySQLDatabase MySQL = new MySQLDatabase("root", "M3312140m", "travel2");  
         public int EquipID { get;set; }
         public string EquipmentName { get; set; }
         public string EquipmentDescription { get; set; }
@@ -54,7 +54,12 @@ namespace SQLConnect
         {
             if (MySQL.Connect())
             {
-                MySQL.SetData("UPDATE Equipment set EquipmentName = '" + EquipmentName + "', EquipmentDescription = '" + EquipmentDescription + "',EquipmentCapacity = " + EquipmentCapacity + " where EquipID = " + EquipID);
+                Dictionary<string, object> vals = new Dictionary<string, object>();
+                vals.Add("@equipName", this.EquipmentName);
+                vals.Add("@equipDesc", this.EquipmentDescription);
+                vals.Add("@equipCap", this.EquipmentCapacity);
+                vals.Add("@equipID", this.EquipID);
+                MySQL.SetData("UPDATE Equipment set EquipmentName = @equipName, EquipmentDescription = @equipDesc, EquipmentCapacity =  @equipCap where EquipID = @equipID",vals);
                 MySQL.Close();
             }
         }
@@ -63,7 +68,12 @@ namespace SQLConnect
         {
             if (MySQL.Connect())
             {
-                MySQL.SetData("insert into equipment (EquipID,EquipmentName,EquipmentDescription,EquipmentCapacity) Values (" + EquipID + ",'" + EquipmentName + "','" + EquipmentDescription + "'," + EquipmentCapacity + ")");
+                Dictionary<string, object> vals = new Dictionary<string, object>();
+                vals.Add("@equipID", this.EquipID);
+                vals.Add("@equipName",this.EquipmentName);
+                vals.Add("@equipDesc", this.EquipmentDescription);
+                vals.Add("@equipCap", this.EquipmentCapacity);
+                MySQL.SetData("insert into equipment (EquipID,EquipmentName,EquipmentDescription,EquipmentCapacity) Values (@equipID, @equipName , @equipDesc , @equipCap)",vals);
                 MySQL.Close();
             }
         }
@@ -72,7 +82,9 @@ namespace SQLConnect
         {
             if (MySQL.Connect())
             {
-                MySQL.SetData("delete from Equipment where EquipId = " + EquipID);
+                Dictionary<string, object> vals = new Dictionary<string, object>();
+                vals.Add("@equipID", this.EquipID);
+                MySQL.SetData("delete from Equipment where EquipId = @equipID",vals );
                 MySQL.Close();
             }
         }

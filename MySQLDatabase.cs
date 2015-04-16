@@ -127,6 +127,33 @@ namespace SQLConnect
 
             
         }
+
+        public bool SetData(string sqlStr, Dictionary<string, object> vals)
+        {
+            try
+            {
+                MySqlCommand cmd = this.prepare(sqlStr, vals);
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
+        }
+
+        public object executeStmt(string sqlStr, Dictionary<string, object> vals)
+        {
+            try
+            {
+                MySqlCommand cmd = this.prepare(sqlStr,vals);
+                return cmd.ExecuteReader();
+            }
+            catch (Exception e)
+            {
+                throw new DLException(e);
+            }
+        }
         public Boolean Close()
         {
             try
