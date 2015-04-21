@@ -16,9 +16,21 @@ namespace SQLConnect
                 string prevName;
                 Equipment test = new Equipment();
                 test.connect();
-                test.EquipID = 568;
+                test.EquipID = 894;
                 test.fetch();
-                test.swap(894);
+                Console.WriteLine("orignal values before swapping:\n\nequipId = " + test.EquipID + " equipName = " + test.EquipmentName);
+                test.EquipID = 1256;
+                test.fetch();
+                Console.WriteLine("equipId = " + test.EquipID + " equipName = " + test.EquipmentName );
+                test.EquipID = 894;
+                test.fetch();
+                test.swap(1256);
+                test.EquipID = 894;
+                test.fetch();
+                Console.WriteLine("\nvalues after swapping:\n\nequipId = " + test.EquipID + " equipName = " + test.EquipmentName);
+                test.EquipID = 1256;
+                test.fetch();
+                Console.WriteLine("equipId = " + test.EquipID + " equipName = " + test.EquipmentName);
 
             }
             catch (DLException e)

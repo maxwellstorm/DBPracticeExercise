@@ -8,7 +8,7 @@ namespace SQLConnect
 {
     class Equipment
     {
-        private MySQLDatabase MySQL = new MySQLDatabase("root", "M3312140m", "travel2");  
+        private MySQLDatabase MySQL = new MySQLDatabase("root", "student", "travel2");  
         public int EquipID { get;set; }
         public string EquipmentName { get; set; }
         public string EquipmentDescription { get; set; }
@@ -92,14 +92,15 @@ namespace SQLConnect
         {
                 try
                 {
-                    MySQL.startTrans();
+                    int firstID = this.EquipID;
                     Dictionary<string, object> vals = new Dictionary<string, object>();
-                    vals.Add("@equipID", this.EquipID);
+                    vals.Add("@equipID", otherID);
                     vals.Add("@equipName", this.EquipmentName);
-                    MySQL.SetData("update equipment set equipmentName = @equipName where equipID = @equipID",vals,true);
                     this.EquipID = otherID;
                     this.fetch();
-                    vals["@equipID"] = this.EquipID;
+                    MySQL.startTrans();
+                    MySQL.SetData("update equipment set equipmentName = @equipName where equipID = @equipID",vals,true);
+                    vals["@equipID"] = firstID;
                     vals["@equipName"] = this.EquipmentName;
                     MySQL.SetData("update equipment set equipmentName = @equipName where equipID = @equipID", vals, true);
                     MySQL.endTrans();
@@ -111,6 +112,16 @@ namespace SQLConnect
             
         }
 
+        public void test()
+        {
+            MySQL.startTrans();
+            Dictionary<string, object> vals = new Dictionary<string, object>();
+            vals.Add("@equipId", 1);
+            MySQL.SetData("insert into equipment (equipId) values (@equipId)",vals,true);
+            vals["@equipId"] = 2;
+            MySQL.SetData("insert into equipment (equipId) values (@equipId)",vals,true);
+            MySQL.endTrans();
+        }
         public void connect()
         {
             MySQL.Connect();

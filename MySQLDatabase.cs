@@ -136,8 +136,8 @@ namespace SQLConnect
             {
 
                 MySqlCommand cmd = new MySqlCommand(sqlStr, conn);
-                this.prepare(sqlStr, vals, cmd);
-                if (trans)
+                cmd = this.prepare(sqlStr, vals, cmd);
+                if (trans && cmd.Transaction == null)
                     cmd.Transaction = this.trans;
                 cmd.ExecuteNonQuery();
                 return true;
@@ -284,6 +284,7 @@ namespace SQLConnect
         public void endTrans()
         {
             trans.Commit();
+            trans.Dispose();
         }
 
         public void rollbackTrans()
