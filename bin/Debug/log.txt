@@ -41,3 +41,10 @@
 4/16/2015 11:41:57 AM Authentication to host 'localhost' for user 'root' using method 'mysql_native_password' failed with message: Access denied for user 'root'@'localhost' (using password: YES)
 4/16/2015 11:42:31 AM Authentication to host 'localhost' for user 'root' using method 'mysql_native_password' failed with message: Access denied for user 'root'@'localhost' (using password: YES)
 4/16/2015 11:43:46 AM Authentication to host 'localhost' for user 'root' using method 'mysql_native_password' failed with message: Access denied for user 'root'@'localhost' (using password: YES)
+4/21/2015 2:59:26 PM The connection is already open.                   
+4/21/2015 3:02:13 PM Fatal error encountered during command execution. 
+4/21/2015 3:02:13 PM Exception of type 'SQLConnect.DLException' was thrown.
+4/21/2015 3:02:46 PM Fatal error encountered during command execution. 
+4/21/2015 3:02:46 PM Exception of type 'SQLConnect.DLException' was thrown.
+4/21/2015 3:03:42 PM Fatal error encountered during command execution. 
+4/21/2015 3:03:42 PM Exception of type 'SQLConnect.DLException' was thrown.

@@ -14,6 +14,7 @@ namespace SQLConnect
         public Boolean Connected;
         private MySqlConnection conn;
         private Dictionary<string,MySqlCommand> prepStatements;
+        private MySqlTransaction trans;
 
         public MySQLDatabase(string Username, string Password, string DatabaseName)
         {
@@ -101,7 +102,8 @@ namespace SQLConnect
             try
             {
                 List<List<object>> toReturn = new List<List<object>>();
-                MySqlCommand cmd = this.prepare(sqlStr, vals);
+                MySqlCommand cmd = new MySqlCommand(sqlStr, conn);
+                cmd = this.prepare(sqlStr, vals,cmd);
                 addSQLData(cmd, toReturn);
                 return toReturn;
             }
@@ -128,11 +130,15 @@ namespace SQLConnect
             
         }
 
-        public bool SetData(string sqlStr, Dictionary<string, object> vals)
+        public bool SetData(string sqlStr, Dictionary<string, object> vals,Boolean trans)
         {
             try
             {
-                MySqlCommand cmd = this.prepare(sqlStr, vals);
+
+                MySqlCommand cmd = new MySqlCommand(sqlStr, conn);
+                this.prepare(sqlStr, vals, cmd);
+                if (trans)
+                    cmd.Transaction = this.trans;
                 cmd.ExecuteNonQuery();
                 return true;
             }
@@ -146,7 +152,8 @@ namespace SQLConnect
         {
             try
             {
-                MySqlCommand cmd = this.prepare(sqlStr,vals);
+                MySqlCommand cmd = new MySqlCommand(sqlStr, conn);
+                this.prepare(sqlStr,vals,cmd);
                 return cmd.ExecuteReader();
             }
             catch (Exception e)
@@ -234,9 +241,9 @@ namespace SQLConnect
             }
         }
 
-        private MySqlCommand prepare(string sqlStr, Dictionary<string, object> vals)
+        private MySqlCommand prepare(string sqlStr, Dictionary<string, object> vals, MySqlCommand cmd)
         {
-            MySqlCommand cmd = new MySqlCommand(sqlStr, conn);
+        
             try
             {
                 MySqlParameter param;
@@ -266,6 +273,22 @@ namespace SQLConnect
             }
             return cmd;
             
+        }
+
+
+        public void startTrans()
+        {
+            trans = conn.BeginTransaction();
+        }
+
+        public void endTrans()
+        {
+            trans.Commit();
+        }
+
+        public void rollbackTrans()
+        {
+            trans.Rollback();
         }
 
 
