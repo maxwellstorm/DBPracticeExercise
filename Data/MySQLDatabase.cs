@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.Data;
 
-namespace SQLConnect
+namespace SQLConnect.Data
 {
     class MySQLDatabase
     {
@@ -144,7 +144,7 @@ namespace SQLConnect
             }
             catch(Exception e)
             {
-                return false;
+                throw new DLException(e);
             }
         }
 

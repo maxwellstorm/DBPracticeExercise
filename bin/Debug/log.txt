@@ -49,3 +49,6 @@
 4/21/2015 3:03:42 PM Fatal error encountered during command execution. 
 4/21/2015 3:03:42 PM Exception of type 'SQLConnect.DLException' was thrown.
 4/21/2015 6:24:55 PM Authentication to host 'localhost' for user 'root' using method 'mysql_native_password' failed with message: Access denied for user 'root'@'localhost' (using password: YES)
+4/29/2015 11:55:33 PM Column 'EquipmentName' cannot be null             
+4/29/2015 11:56:03 PM Column 'EquipmentName' cannot be null             
+4/29/2015 11:56:28 PM Column 'EquipmentName' cannot be null             

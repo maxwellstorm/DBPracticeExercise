@@ -22,6 +22,21 @@ USE travel2;
 --
 -- Table structure for table `equipment`
 --
+DROP TABLE IF EXISTS 'Users'
+
+CREATE TABLE `Users` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `password` varchar(20) NOT NULL DEFAULT '',
+  `Name` varchar(20) NOT NULL DEFAULT '',
+  `AccessLevel` varchar(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+);
+
+LOCK TABLES `Users` WRITE;
+INSERT INTO Users (id,Password,Name,Access) VALUES (1,'admin','max','Admin');
+INSERT INTO Users (id,Password,Name,Access) VALUES (2,'test2','john','Editor');
+INSERT INTO Users (id,Password,Name,Access) VALUES (3,'guest','matt','General');
+UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `equipment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

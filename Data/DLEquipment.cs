@@ -4,25 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SQLConnect
+namespace SQLConnect.Data
 {
-    class Equipment
+    class DLEquipment
     {
-        private MySQLDatabase MySQL = new MySQLDatabase("root", "student", "travel2");  
+        private MySQLDatabase db;
         public int EquipID { get;set; }
         public string EquipmentName { get; set; }
         public string EquipmentDescription { get; set; }
         public int EquipmentCapacity { get; set; }
 
-        public Equipment() { }
-
-        public Equipment(int EquipID)
+        public DLEquipment(MySQLDatabase db) 
         {
+            this.db = db;
+        }
+
+        public DLEquipment(MySQLDatabase db,int EquipID)
+        {
+            this.db = db;
             this.EquipID = EquipID;
         }
 
-        public Equipment(int EquipID, string EquipmentName, string EquipmentDescription, int EquipmentCapcity)
+        public DLEquipment(MySQLDatabase db, int EquipID, string EquipmentName, string EquipmentDescription, int EquipmentCapcity)
         {
+            this.db = db;
             this.EquipID = EquipID;
             this.EquipmentName = EquipmentName;
             this.EquipmentDescription = EquipmentDescription;
@@ -36,7 +41,7 @@ namespace SQLConnect
                 //List<Object> row = MySQL.GetData("SELECT EquipmentName,EquipmentDescription,EquipmentCapacity from Equipment where EquipID = " + EquipID)[0];
                 Dictionary<string,object> vals = new Dictionary<string,object>();
                 vals.Add("@equipID",this.EquipID);
-                List<object> row = MySQL.GetData("SELECT EquipmentName,EquipmentDescription,EquipmentCapacity from Equipment where EquipID = @equipID", vals)[0];
+                List<object> row = db.GetData("SELECT EquipmentName,EquipmentDescription,EquipmentCapacity from Equipment where EquipID = @equipID", vals)[0];
                 EquipmentName = (string)row[0];
                 EquipmentDescription = (string)row[1];
                 EquipmentCapacity = (int)row[2];
@@ -50,41 +55,35 @@ namespace SQLConnect
 
         public void put()//update exsisting record wth equipID with this classes current attibutes
         {
-            if (MySQL.Connect())
-            {
+        
+            
                 Dictionary<string, object> vals = new Dictionary<string, object>();
                 vals.Add("@equipName", this.EquipmentName);
                 vals.Add("@equipDesc", this.EquipmentDescription);
                 vals.Add("@equipCap", this.EquipmentCapacity);
                 vals.Add("@equipID", this.EquipID);
-                MySQL.SetData("UPDATE Equipment set EquipmentName = @equipName, EquipmentDescription = @equipDesc, EquipmentCapacity =  @equipCap where EquipID = @equipID",vals,false);
-                MySQL.Close();
-            }
+                db.SetData("UPDATE Equipment set EquipmentName = @equipName, EquipmentDescription = @equipDesc, EquipmentCapacity =  @equipCap where EquipID = @equipID",vals,false);
+
+            
         }
 
         public void post()//insert new record with objects attributes
         {
-            if (MySQL.Connect())
-            {
                 Dictionary<string, object> vals = new Dictionary<string, object>();
                 vals.Add("@equipID", this.EquipID);
                 vals.Add("@equipName",this.EquipmentName);
                 vals.Add("@equipDesc", this.EquipmentDescription);
                 vals.Add("@equipCap", this.EquipmentCapacity);
-                MySQL.SetData("insert into equipment (EquipID,EquipmentName,EquipmentDescription,EquipmentCapacity) Values (@equipID, @equipName , @equipDesc , @equipCap)",vals,false);
-                MySQL.Close();
-            }
+                db.SetData("insert into equipment (EquipID,EquipmentName,EquipmentDescription,EquipmentCapacity) Values (@equipID, @equipName , @equipDesc , @equipCap)",vals,false);
+            
         }
 
         public void delete()//delete object with current equipId
         {
-            if (MySQL.Connect())
-            {
                 Dictionary<string, object> vals = new Dictionary<string, object>();
                 vals.Add("@equipID", this.EquipID);
-                MySQL.SetData("delete from Equipment where EquipId = @equipID",vals,false );
-                MySQL.Close();
-            }
+                db.SetData("delete from Equipment where EquipId = @equipID",vals,false );
+           
         }
 
 
@@ -98,34 +97,31 @@ namespace SQLConnect
                     vals.Add("@equipName", this.EquipmentName);
                     this.EquipID = otherID;
                     this.fetch();
-                    MySQL.startTrans();
-                    MySQL.SetData("update equipment set equipmentName = @equipName where equipID = @equipID",vals,true);
+                    db.startTrans();
+                    db.SetData("update equipment set equipmentName = @equipName where equipID = @equipID",vals,true);
                     vals["@equipID"] = firstID;
                     vals["@equipName"] = this.EquipmentName;
-                    MySQL.SetData("update equipment set equipmentName = @equipName where equipID = @equipID", vals, true);
-                    MySQL.endTrans();
+                    db.SetData("update equipment set equipmentName = @equipName where equipID = @equipID", vals, true);
+                    db.endTrans();
                 }
                 catch (Exception e)
                 {
-                    MySQL.rollbackTrans();
+                    db.rollbackTrans();
                 }
             
         }
 
         public void test()
         {
-            MySQL.startTrans();
+            db.startTrans();
             Dictionary<string, object> vals = new Dictionary<string, object>();
             vals.Add("@equipId", 1);
-            MySQL.SetData("insert into equipment (equipId) values (@equipId)",vals,true);
+            db.SetData("insert into equipment (equipId) values (@equipId)",vals,true);
             vals["@equipId"] = 2;
-            MySQL.SetData("insert into equipment (equipId) values (@equipId)",vals,true);
-            MySQL.endTrans();
+            db.SetData("insert into equipment (equipId) values (@equipId)",vals,true);
+            db.endTrans();
         }
-        public void connect()
-        {
-            MySQL.Connect();
-        }
+     
 
         
     }
